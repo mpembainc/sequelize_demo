@@ -20,6 +20,7 @@ router.post('/', async (req, res) => {
 router.get('/', async (_, res) => {
   try {
     const users = await User.findAll();
+
     res.send({ users });
   } catch (error) {
     console.log(error);
@@ -32,7 +33,8 @@ router.get('/:id', async (req, res) => {
     const id = req.params.id;
     const user = await User.findByPk(id); //find by primary key
     // const user = await User.findOne({ where: { firstName: 'Hussein' } }); //find by any column
-    res.send({ user });
+    const posts = await user.getPosts();
+    res.send({ user, posts });
   } catch (error) {
     console.log(error);
   }
